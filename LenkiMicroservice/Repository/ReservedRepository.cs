@@ -39,7 +39,7 @@ namespace LenkiMicroservice.Repository
 
         public IEnumerable<ReservedViewModel> ReservedBookscustomers(int customerid)
         {
-            if (customerid != null)
+            if (customerid > 0)
             {
                 var result = (from users in this._dbContext.Users
                               join Res in this._dbContext.ReservedBooks

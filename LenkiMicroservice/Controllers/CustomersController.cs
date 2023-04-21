@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace LenkiMicroservice.Controllers
 {
@@ -20,8 +21,12 @@ namespace LenkiMicroservice.Controllers
         {
             _customersRepository = customersRepository;
         }
-        
-        [HttpGet]
+
+        /// <summary>
+        /// Get a List of Registered Customers
+        /// </summary>
+        [SwaggerOperation("Get a List of Registered Customers")]
+        [HttpGet("{GetListofCustomer}")]
         public IActionResult GetCustomers()
         {
             var username = HttpContext.User;
@@ -33,7 +38,12 @@ namespace LenkiMicroservice.Controllers
             return new OkObjectResult(customers);
         }
 
-        [HttpGet("{id}", Name = "GetCustomerById")]
+
+        /// <summary>
+        /// Get a Customer By Id
+        /// </summary>
+        [SwaggerOperation("Get a Customer By Id")]
+        [HttpGet("{GetCustomerById}", Name = "GetCustomerById")]
         public IActionResult Get(int id)
         {
             var username = HttpContext.User;
@@ -45,7 +55,12 @@ namespace LenkiMicroservice.Controllers
             return new OkObjectResult(customer);
         }
 
-        [HttpPost]
+
+        /// <summary>
+        /// Create a Customer
+        /// </summary>
+        [SwaggerOperation("Create a Customer")]
+        [HttpPost("{CreateCustomer}")]
         public IActionResult Post([FromBody] User customer)
         {
             var username = HttpContext.User;
@@ -62,7 +77,11 @@ namespace LenkiMicroservice.Controllers
             }
         }
 
-        [HttpPut]
+        /// <summary>
+        /// Update Customer Information
+        /// </summary>
+        [SwaggerOperation("Update Customer Information")]
+        [HttpPut("{UpdateCustomer}")]
         public IActionResult Put([FromBody] Users customer)
         {
             var username = HttpContext.User;
@@ -82,7 +101,12 @@ namespace LenkiMicroservice.Controllers
             return new NoContentResult();
         }
 
-        [HttpDelete("{id}")]
+
+        /// <summary>
+        /// Delete a Customer by Id
+        /// </summary>
+        [SwaggerOperation("Delete a Customer by Id ")]
+        [HttpDelete("{DeletCustomerById}")]
         public IActionResult Delete(int id)
         {
             var username = HttpContext.User;

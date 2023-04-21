@@ -8,10 +8,8 @@ namespace LenkiMicroservice.Model.ViewModel
     public class ReservedViewModel
     {
         public string FullName { get; set; }
-        public string Password { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
-        public string UserRole { get; set; }
         public int BookId { get; set; }
     }
 

@@ -5,6 +5,10 @@
     <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>C:\Users\PROGRESSIVE\Desktop\Lenkie\LenkiMicroservice\LenkiMicroservice\LenkiMicroservice.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Remove="Migrations\**" />
     <Content Remove="Migrations\**" />
@@ -14,6 +18,7 @@
 
   <ItemGroup>
     <Compile Remove="Controllers\AuthenticationController.cs" />
+    <Compile Remove="EmailService\EmailLogic.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,6 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="EmailService\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
@@ -50,6 +56,7 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.3.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.3.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.5.0" />
   </ItemGroup>
 
 </Project>

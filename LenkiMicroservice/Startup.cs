@@ -36,6 +36,7 @@ namespace LenkiMicroservice
             services.AddMvc();
             services.AddDbContext<LenkiDBContext>(o => o.UseSqlServer(Configuration.GetConnectionString("LenkiConnection")));
             services.AddAuthorization();
+            services.AddTransient<IBorrow, BorrowRepository>();
             services.AddTransient<IReserved, ReservedRepository>();
             services.AddTransient<IBooks, BooksRepository>();
             services.AddTransient<ICustomers, CustomersRepository>();
@@ -87,15 +88,17 @@ namespace LenkiMicroservice
             new List<string>()
           }
         });
-                //var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                //var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                //c.IncludeXmlComments(xmlPath);
+                // Set the comments path for the Swagger JSON and UI.
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
             
         }
 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+
         public void Configure(IApplicationBuilder app, Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -103,23 +106,23 @@ namespace LenkiMicroservice
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseMvc(routes=>
+            app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "defaul", template: "{controller=Home}/{action=Index}/{id?}"
+                    name: "default", template: "{controller=Home}/{action=Index}/{id?}"
                     );
 
             });
             app.UseAuthentication();
             app.UseSwagger();
-            app.UseSwaggerUI(c=>
+            app.UseSwaggerUI(c =>
             {
                 //c.SwaggerEndpoint
-                c.SwaggerEndpoint  ("/swagger/v1/swagger.json","check out end point");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "check out end point");
             });
-           app.UseAuthentication();
+            app.UseAuthentication();
             app.UseHttpsRedirection();
-            
+
 
         }
     }

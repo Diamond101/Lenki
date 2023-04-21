@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,12 @@ namespace LenkiMicroservice.Controllers
             _reservedRepository = reservedRepository;
         }
 
-        [HttpGet]
+
+        /// <summary>
+        /// Get a List of all Reserved Books 
+        /// </summary>
+        [SwaggerOperation("Get a List of all Reserved Books ")]
+        [HttpGet("{GetListofReservedBooks}")]
         public IActionResult GetReservedBooks(int customerId)
         {
             var username = HttpContext.User;
@@ -36,8 +42,11 @@ namespace LenkiMicroservice.Controllers
             return new OkObjectResult(customers);
         }
 
-
-        [HttpPost]
+        /// <summary>
+        /// Reserved a Book in the Library
+        /// </summary>
+        [SwaggerOperation("Reserved a Book in the Library ")]
+        [HttpPost("{ReservedaBook}")]
         public IActionResult Post([FromBody] ReservedBooks reserved )
         {
             var username = HttpContext.User;
@@ -53,7 +62,12 @@ namespace LenkiMicroservice.Controllers
             }
         }
 
-        [HttpPut]
+
+        /// <summary>
+        /// UnReserved a Book in the Library
+        /// </summary>
+        [SwaggerOperation("UnReserved a Book in the Library ")]
+        [HttpPut("{UnReservedBooks}")]
         public IActionResult Put([FromBody] ReservedBooks reserved)
         {
             var username = HttpContext.User;
@@ -73,7 +87,12 @@ namespace LenkiMicroservice.Controllers
             return new NoContentResult();
         }
 
-        [HttpDelete("{id}")]
+
+        /// <summary>
+        /// Delete a Book Reservation By Id
+        /// </summary>
+        [SwaggerOperation("Delete a Book Reservation By Id ")]
+        [HttpDelete("{DeleteReservedById}")]
         public IActionResult Delete(int id)
         {
             var username = HttpContext.User;

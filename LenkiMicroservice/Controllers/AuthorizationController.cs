@@ -3,6 +3,7 @@ using LenkiMicroservice.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -23,6 +24,11 @@ namespace LenkiMicroservice.Controllers
             _configuration = config;
             _context = context;
         }
+
+        /// <summary>
+        /// Get Authorization Token to Access other End Point
+        /// </summary>
+        [SwaggerOperation("Get Authorization Token to Access other End Point")]
         [HttpPost("login")]
         public IActionResult Post(Login _user)
         {

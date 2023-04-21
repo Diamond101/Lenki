@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>LenkiMicroservice</name>
+    </assembly>
+    <members>
+        <member name="M:LenkiMicroservice.Controllers.AuthorizationController.Post(LenkiMicroservice.Model.Login)">
+            <summary>
+            Get Authorization Token to Access other End Point
+            </summary>
+        </member>
+        <member name="M:LenkiMicroservice.Controllers.BooksController.Get(System.String)">
+            <summary>
+            Get  a List of all Books in the Library
+            </summary>
+        </member>
+        <member name="M:LenkiMicroservice.Controllers.BooksController.Get(System.Int32)">
+            <summary>
+            Get  a Book by Id from the Library
+            </summary>
+        </member>
+        <member name="M:LenkiMicroservice.Controllers.BooksController.Post(LenkiMicroservice.Model.Book)">
+            <summary>
+            Create a Book in the Library
+            </summary>
+        </member>
+        <member name="M:LenkiMicroservice.Controllers.BooksController.Put(LenkiMicroservice.Model.Books)">
+            <summary>
+            Update Book Information in the Library
+            </summary>
+        </member>
+        <member name="M:LenkiMicroservice.Controllers.BooksController.Delete(System.Int32)">
+            <summary>
+            Delete a Book from the Library by Id
+            </summary>
+        </member>
+        <member name="M:LenkiMicroservice.Controllers.BorrowBooksController.GetBorrowBooksList(System.Int32)">
+            <summary>
+            Borrow a Book from the Library
+            </summary>
+        </member>
+        <member name="M:LenkiMicroservice.Controllers.BorrowBooksController.Get(System.Int32)">
+            <summary>
+            Get Borrowed book by Id
+            </summary>
+        </member>
+        <member name="M:LenkiMicroservice.Controllers.BorrowBooksController.Post(LenkiMicroservice.Model.BorrowBook)">
+            <summary>
+            Borrow a Book to a Customer
+            </summary>
+        </member>
+        <member name="M:LenkiMicroservice.Controllers.BorrowBooksController.Put(LenkiMicroservice.Model.BorrowBooks)">
+            <summary>
+            Return Book to the Library
+            </summary>
+        </member>
+        <member name="M:LenkiMicroservice.Controllers.BorrowBooksController.Delete(System.Int32)">
+            <summary>
+            Delete borrowed Book By Id
+            </summary>
+        </member>
+        <member name="M:LenkiMicroservice.Controllers.CustomersController.GetCustomers">
+            <summary>
+            Get a List of Registered Customers
+            </summary>
+        </member>
+        <member name="M:LenkiMicroservice.Controllers.CustomersController.Get(System.Int32)">
+            <summary>
+            Get a Customer By Id
+            </summary>
+        </member>
+        <member name="M:LenkiMicroservice.Controllers.CustomersController.Post(LenkiMicroservice.Model.User)">
+            <summary>
+            Create a Customer
+            </summary>
+        </member>
+        <member name="M:LenkiMicroservice.Controllers.CustomersController.Put(LenkiMicroservice.Model.Users)">
+            <summary>
+            Update Customer Information
+            </summary>
+        </member>
+        <member name="M:LenkiMicroservice.Controllers.CustomersController.Delete(System.Int32)">
+            <summary>
+            Delete a Customer by Id
+            </summary>
+        </member>
+        <member name="M:LenkiMicroservice.Controllers.ReservedBookController.GetReservedBooks(System.Int32)">
+            <summary>
+            Get a List of all Reserved Books 
+            </summary>
+        </member>
+        <member name="M:LenkiMicroservice.Controllers.ReservedBookController.Post(LenkiMicroservice.Model.ReservedBooks)">
+            <summary>
+            Reserved a Book in the Library
+            </summary>
+        </member>
+        <member name="M:LenkiMicroservice.Controllers.ReservedBookController.Put(LenkiMicroservice.Model.ReservedBooks)">
+            <summary>
+            UnReserved a Book in the Library
+            </summary>
+        </member>
+        <member name="M:LenkiMicroservice.Controllers.ReservedBookController.Delete(System.Int32)">
+            <summary>
+            Delete a Book Reservation By Id
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,6 +1,5 @@
-﻿using System.Net;
-using System.Transactions;
-using LenkiData.Interface;
+﻿using System.Transactions;
+using LenkiMicroservice.Interface;
 using LenkiMicroservice.Model;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -13,39 +12,38 @@ namespace LenkiMicroservice.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public class BooksController : ControllerBase
+    public class BorrowBooksController : ControllerBase
     {
 
-        private readonly IBooks _booksRepository;
-
-        public BooksController(IBooks booksRepository)
+        private readonly IBorrow _borrowRepository;
+       
+        public BorrowBooksController(IBorrow borrowRepository)
         {
-            _booksRepository = booksRepository;
+            _borrowRepository = borrowRepository;
         }
 
-
         /// <summary>
-        /// Get  a List of all Books in the Library
+        /// Borrow a Book from the Library
         /// </summary>
-        [SwaggerOperation("Get  a List of all Books in the Library")]
-        [HttpGet("GetBooksList")]
-        public IActionResult Get( string BookName)
+        [SwaggerOperation("Get List of Borrowed Books")]
+        [HttpGet("{GetBorrowedBookList}")]
+        public IActionResult GetBorrowBooksList(int customerId)
         {
             var username = HttpContext.User;
             if (username == null)
             {
                 return Unauthorized();
             }
-
-            var books = _booksRepository.GetBooks(BookName);
-            return new OkObjectResult(books);
+            var book = _borrowRepository.ListBoorwedBooks(customerId);
+            return new OkObjectResult(book);
         }
 
+
         /// <summary>
-        /// Get  a Book by Id from the Library
+        /// Get Borrowed book by Id
         /// </summary>
-        [SwaggerOperation("Get  a Book by Id from the Library")]
-        [HttpGet("{GetBookById}", Name = "Get")]
+        [SwaggerOperation("Get Borrowed book by Id")]
+        [HttpGet("{GetBorrodBooksById}", Name = "GetBorrowBooksById")]
         public IActionResult Get(int id)
         {
             var username = HttpContext.User;
@@ -53,17 +51,17 @@ namespace LenkiMicroservice.Controllers
             {
                 return Unauthorized();
             }
-            var product = _booksRepository.GetBookByID(id);
-            return new OkObjectResult(product);
+            var customer = _borrowRepository.GetBookByID(id);
+            return new OkObjectResult(customer);
         }
 
+
         /// <summary>
-        /// Create a Book in the Library
+        /// Borrow a Book to a Customer
         /// </summary>
-        [SwaggerOperation("Create a Book in the Library")]
-        
-        [HttpPost("CreateBooks")]
-        public IActionResult Post([FromBody] Book books)
+        [SwaggerOperation("Borrow a Book to a Customer")]
+        [HttpPost("{BorrowedBook}")]
+        public IActionResult Post([FromBody] BorrowBook borrowBooks)
         {
             var username = HttpContext.User;
             if (username == null)
@@ -72,31 +70,31 @@ namespace LenkiMicroservice.Controllers
             }
             using (var scope = new TransactionScope())
             {
-                _booksRepository.InsertBook(books);
+                _borrowRepository.BorrowBook(borrowBooks);
                 scope.Complete();
                 return CreatedAtAction(nameof(Get), 
-                    new { BookName = books.BookName }, books);
+                    new { CustomerId = borrowBooks.CustomerId }, borrowBooks);
             }
         }
 
 
         /// <summary>
-        /// Update Book Information in the Library
+        /// Return Book to the Library
         /// </summary>
-        [SwaggerOperation("Update Book Information in the Library")]
-        [HttpPut("UpdateBooks")]
-        public IActionResult Put([FromBody] Books books)
+        [SwaggerOperation("Return Book to the Library")]
+        [HttpPut("{ReturnBook}")]
+        public IActionResult Put([FromBody] BorrowBooks borrow)
         {
             var username = HttpContext.User;
             if (username == null)
             {
                 return Unauthorized();
             }
-            if (books != null)
+            if (borrow != null)
             {
                 using (var scope = new TransactionScope())
                 {
-                    _booksRepository.UpdateBook(books);
+                    _borrowRepository.ReturnBook(borrow);
                     scope.Complete();
                     return new OkResult();
                 }
@@ -105,12 +103,11 @@ namespace LenkiMicroservice.Controllers
         }
 
 
-
         /// <summary>
-        /// Delete a Book from the Library by Id
+        /// Delete borrowed Book By Id
         /// </summary>
-        [SwaggerOperation("Delete a Book from the Library by Id")]
-        [HttpDelete("{DeleteBookId}")]
+        [SwaggerOperation("Delete borrowed Book By Id")]
+        [HttpDelete("{DeleteBorrowedBookById}")]
         public IActionResult Delete(int id)
         {
             var username = HttpContext.User;
@@ -118,8 +115,9 @@ namespace LenkiMicroservice.Controllers
             {
                 return Unauthorized();
             }
-            _booksRepository.DeleteBook(id);
+            _borrowRepository.DeleteBorow(id);
             return new OkResult();
         }
+
     }
 }
