@@ -5,7 +5,7 @@ namespace LenkiData.Interface
 {
     public  interface IBooks
     {
-        IEnumerable<Books> GetBooks();
+        IEnumerable<Books> GetBooks( string BookName);
         Books GetBookByID(int books);
         void InsertBook(Book books);
         void DeleteBook(int bookId);

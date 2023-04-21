@@ -36,6 +36,7 @@ namespace LenkiMicroservice
             services.AddMvc();
             services.AddDbContext<LenkiDBContext>(o => o.UseSqlServer(Configuration.GetConnectionString("LenkiConnection")));
             services.AddAuthorization();
+            services.AddTransient<IReserved, ReservedRepository>();
             services.AddTransient<IBooks, BooksRepository>();
             services.AddTransient<ICustomers, CustomersRepository>();
             services.AddTransient<ITokenBuilder, TokenBuilder>();

@@ -1,57 +1,44 @@
-﻿using System.Net;
-using System.Transactions;
-using LenkiData.Interface;
+﻿using LenkiMicroservice.Interface;
 using LenkiMicroservice.Model;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.AspNetCore.Annotations;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Transactions;
 
 namespace LenkiMicroservice.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public class BooksController : ControllerBase
+    public class ReservedBookController : ControllerBase
     {
+        private readonly IReserved _reservedRepository;
 
-        private readonly IBooks _booksRepository;
-
-        public BooksController(IBooks booksRepository)
+        public ReservedBookController(IReserved reservedRepository)
         {
-            _booksRepository = booksRepository;
+            _reservedRepository = reservedRepository;
         }
 
-       
-        [HttpGet("/api/BooktList")]     
-        [SwaggerOperation("Get Product List information")]
-        public IActionResult Get( string BookName)
+        [HttpGet]
+        public IActionResult GetReservedBooks(int customerId)
         {
             var username = HttpContext.User;
             if (username == null)
             {
                 return Unauthorized();
             }
-
-            var books = _booksRepository.GetBooks(BookName);
-            return new OkObjectResult(books);
+            var customers = _reservedRepository.ReservedBookscustomers(customerId);
+            return new OkObjectResult(customers);
         }
 
-        [HttpGet("{id}", Name = "Get")]
-        public IActionResult Get(int id)
-        {
-            var username = HttpContext.User;
-            if (username == null)
-            {
-                return Unauthorized();
-            }
-            var product = _booksRepository.GetBookByID(id);
-            return new OkObjectResult(product);
-        }
 
         [HttpPost]
-        public IActionResult Post([FromBody] Book books)
+        public IActionResult Post([FromBody] ReservedBooks reserved )
         {
             var username = HttpContext.User;
             if (username == null)
@@ -60,26 +47,25 @@ namespace LenkiMicroservice.Controllers
             }
             using (var scope = new TransactionScope())
             {
-                _booksRepository.InsertBook(books);
+                _reservedRepository.ReservedBook(reserved);
                 scope.Complete();
-                return CreatedAtAction(nameof(Get), 
-                    new { BookName = books.BookName }, books);
+                return new OkResult();
             }
         }
 
         [HttpPut]
-        public IActionResult Put([FromBody] Books books)
+        public IActionResult Put([FromBody] ReservedBooks reserved)
         {
             var username = HttpContext.User;
             if (username == null)
             {
                 return Unauthorized();
             }
-            if (books != null)
+            if (reserved != null)
             {
                 using (var scope = new TransactionScope())
                 {
-                    _booksRepository.UpdateBook(books);
+                    _reservedRepository.UpdateReserved(reserved);
                     scope.Complete();
                     return new OkResult();
                 }
@@ -95,7 +81,7 @@ namespace LenkiMicroservice.Controllers
             {
                 return Unauthorized();
             }
-            _booksRepository.DeleteBook(id);
+            _reservedRepository.DeleteReseved(id);
             return new OkResult();
         }
     }

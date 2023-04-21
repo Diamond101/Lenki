@@ -27,9 +27,18 @@ namespace LenkiData.Repository
             return _dbContext.Books.Find(bookId);
         }
 
-        public IEnumerable<Books> GetBooks()
+        public IEnumerable<Books> GetBooks( string BookName)
         {
+           
+            if (!string.IsNullOrEmpty(BookName))
+            {
+             return   _dbContext.Books.Where(u => u.BookName.Contains(BookName)).ToList();
+            }
+            else
+            {
             return _dbContext.Books.ToList();
+            }
+            
         }
 
         public void InsertBook(Book books)
