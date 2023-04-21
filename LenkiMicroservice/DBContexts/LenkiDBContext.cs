@@ -14,5 +14,6 @@ namespace LenkiMicroservice.DBContexts
         public DbSet<Users> Users { get; set; }
         public DbSet<ReservedBooks> ReservedBooks { get; set; }
         public DbSet<BorrowBooks> BorrowBooks { get; set; }
+        public DbSet<Notifications> notifications { get; set; }
     }
 }

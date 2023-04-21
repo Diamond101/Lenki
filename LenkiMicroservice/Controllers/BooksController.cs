@@ -79,6 +79,28 @@ namespace LenkiMicroservice.Controllers
             }
         }
 
+        /// <summary>
+        /// Create Notification
+        /// </summary>
+        [SwaggerOperation("Create Notification")]
+
+        [HttpPost("CreateNotification")]
+        public IActionResult CreateNotification([FromBody] Notification notification)
+        {
+            var username = HttpContext.User;
+            if (username == null)
+            {
+                return Unauthorized();
+            }
+            using (var scope = new TransactionScope())
+            {
+                _booksRepository.SetNotification(notification);
+                scope.Complete();
+                return CreatedAtAction(nameof(Get),
+                    new { CustomerId = notification.CustomerId }, notification);
+            }
+        }
+
 
         /// <summary>
         /// Update Book Information in the Library

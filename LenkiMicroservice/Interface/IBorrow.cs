@@ -13,6 +13,9 @@ namespace LenkiMicroservice.Interface
         void DeleteBorow(int bookIdId);
         void ReturnBook(BorrowBooks borrow);
         Books GetBookByID(int bookId);
+        Notifications CheckNotification(int bookId);
+        Users GetCustomerByID(int customersId);
+
         void Save();
     }
 }

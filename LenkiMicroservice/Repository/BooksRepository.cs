@@ -60,6 +60,15 @@ namespace LenkiData.Repository
             _dbContext.SaveChanges();
         }
 
+        public void SetNotification(Notification notification)
+        {
+            Notifications not = new Notifications();
+            not.CustomerId = notification.CustomerId;
+            not.BookId = notification.BookId;
+            _dbContext.Add(not);
+            Save();
+        }
+
         public void UpdateBook(Books books)
         {
             _dbContext.Entry(books).State = EntityState.Modified;

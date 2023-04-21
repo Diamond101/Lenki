@@ -8,6 +8,7 @@ namespace LenkiData.Interface
         IEnumerable<Books> GetBooks( string BookName);
         Books GetBookByID(int books);
         void InsertBook(Book books);
+        void SetNotification(Notification notification);
         void DeleteBook(int bookId);
         void UpdateBook(Books books);
         void Save();

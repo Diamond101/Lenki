@@ -24,6 +24,11 @@
             Create a Book in the Library
             </summary>
         </member>
+        <member name="M:LenkiMicroservice.Controllers.BooksController.CreateNotification(LenkiMicroservice.Model.Notification)">
+            <summary>
+            Create Notification
+            </summary>
+        </member>
         <member name="M:LenkiMicroservice.Controllers.BooksController.Put(LenkiMicroservice.Model.Books)">
             <summary>
             Update Book Information in the Library

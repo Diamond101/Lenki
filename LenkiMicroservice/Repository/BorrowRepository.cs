@@ -1,4 +1,5 @@
-﻿using LenkiMicroservice.DBContexts;
+﻿using LenkiData;
+using LenkiMicroservice.DBContexts;
 using LenkiMicroservice.Interface;
 using LenkiMicroservice.Model;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace LenkiMicroservice.Repository
 {
-    public class BorrowRepository : IBorrow
+    public class BorrowRepository : IBorrow 
     {
         private readonly LenkiDBContext _dbContext;
 
@@ -27,6 +28,11 @@ namespace LenkiMicroservice.Repository
             Save();
         }
 
+        public Notifications CheckNotification(int bookId)
+        {
+            return _dbContext.notifications.Find(bookId);
+        }
+
         public void DeleteBorow(int BookId)
         {
             var book = _dbContext.BorrowBooks.Find(BookId);
@@ -37,6 +43,11 @@ namespace LenkiMicroservice.Repository
         public Books GetBookByID(int bookId)
         {
             return _dbContext.Books.Find(bookId);
+        }
+
+        public Users GetCustomerByID(int customersId)
+        {
+            return _dbContext.Users.Find(customersId);
         }
 
         public IEnumerable<BorrowBooks> ListBoorwedBooks(int customerid)
@@ -57,11 +68,16 @@ namespace LenkiMicroservice.Repository
             currBook.Borrowed = false;
             _dbContext.Entry(currBook).State = EntityState.Modified;
             _dbContext.Entry(borrow).State = EntityState.Modified;
+           var notify=   CheckNotification(borrow.BookId);
+            var response = GetCustomerByID(notify.CustomerId);
+            var bookres = GetBookByID(notify.BookId);
+            var res = new EmailLogic().SendSMS(response.Phone, "Dear Customer The Book Title: " + bookres.BookName + "  you requested in now avaliable.", "Lenki");
+
         }
 
         public void Save()
         {
-            throw new NotImplementedException();
+            _dbContext.SaveChanges();
         }
     }
 }

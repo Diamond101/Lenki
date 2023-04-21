@@ -15,6 +15,7 @@ namespace LenkiMicroservice.Model
         public string Description { get; set; }
         public bool Reserved { get; set; }
         public bool Borrowed { get; set; }
+        public string Notification { get; set; }
     }
 
     public class Book
