@@ -11,10 +11,11 @@ namespace LenkiMicroservice.Interface
    public interface IReserved
     {
         IEnumerable<ReservedViewModel> ReservedBookscustomers(int customerid);
-        void ReservedBook(ReservedBooks customer);
+        void ReservedBook(ReservedBook customer);
         void DeleteReseved(int reservedId);
         void UpdateReserved(ReservedBooks customer);
         Books GetBookByID(int bookId);
+        ReservedBooks GetResevedBookByID(int bookId);
         void Save();
     }
 }

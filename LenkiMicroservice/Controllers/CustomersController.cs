@@ -60,7 +60,7 @@ namespace LenkiMicroservice.Controllers
         /// Create a Customer
         /// </summary>
         [SwaggerOperation("Create a Customer")]
-        [HttpPost("{CreateCustomer}")]
+        [HttpPost]
         public IActionResult Post([FromBody] User customer)
         {
             var username = HttpContext.User;
@@ -81,7 +81,7 @@ namespace LenkiMicroservice.Controllers
         /// Update Customer Information
         /// </summary>
         [SwaggerOperation("Update Customer Information")]
-        [HttpPut("{UpdateCustomer}")]
+        [HttpPut("UpdateCustomer")]
         public IActionResult Put([FromBody] Users customer)
         {
             var username = HttpContext.User;

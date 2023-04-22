@@ -46,19 +46,27 @@ namespace LenkiMicroservice.Controllers
         /// Reserved a Book in the Library
         /// </summary>
         [SwaggerOperation("Reserved a Book in the Library ")]
-        [HttpPost("{ReservedaBook}")]
-        public IActionResult Post([FromBody] ReservedBooks reserved )
+        [HttpPost]
+        public IActionResult Post([FromBody] ReservedBook reserved )
         {
             var username = HttpContext.User;
             if (username == null)
             {
                 return Unauthorized();
             }
-            using (var scope = new TransactionScope())
+            var response = _reservedRepository.GetResevedBookByID(reserved.BookId);
+            if (response != null )
             {
-                _reservedRepository.ReservedBook(reserved);
-                scope.Complete();
-                return new OkResult();
+                return BadRequest("Dear Customer The Book Id: " + response.BookId + "  you requested has been reserved by Another Customer Thank.");
+            }
+            else
+            {
+                using (var scope = new TransactionScope())
+                {
+                    _reservedRepository.ReservedBook(reserved);
+                    scope.Complete();
+                    return new OkResult();
+                }
             }
         }
 
@@ -67,7 +75,7 @@ namespace LenkiMicroservice.Controllers
         /// UnReserved a Book in the Library
         /// </summary>
         [SwaggerOperation("UnReserved a Book in the Library ")]
-        [HttpPut("{UnReservedBooks}")]
+        [HttpPut("UnReservedBooks")]
         public IActionResult Put([FromBody] ReservedBooks reserved)
         {
             var username = HttpContext.User;

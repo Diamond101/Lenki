@@ -31,9 +31,18 @@ namespace LenkiMicroservice.Repository
             return _dbContext.Books.Find(bookId);
         }
 
-        public void ReservedBook(ReservedBooks customer)
+        public ReservedBooks GetResevedBookByID(int bookId)
         {
-            _dbContext.Add(customer);
+            return _dbContext.ReservedBooks.Find(bookId);
+        }
+
+        public void ReservedBook(ReservedBook customer)
+        {
+            ReservedBooks reservedBook = new ReservedBooks();
+            reservedBook.BookId = customer.BookId;
+            reservedBook.CustomerId = customer.CustomerId;
+            reservedBook.Reserved = customer.Reserved;
+            _dbContext.Add(reservedBook);
             Save();
         }
 

@@ -62,7 +62,7 @@ namespace LenkiMicroservice.Controllers
         /// </summary>
         [SwaggerOperation("Create a Book in the Library")]
         
-        [HttpPost("CreateBooks")]
+        [HttpPost]
         public IActionResult Post([FromBody] Book books)
         {
             var username = HttpContext.User;
