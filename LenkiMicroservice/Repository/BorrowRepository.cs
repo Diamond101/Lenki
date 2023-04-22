@@ -20,12 +20,15 @@ namespace LenkiMicroservice.Repository
         }
         public void BorrowBook(BorrowBook borrowBooks)
         {
+           
             BorrowBook book = new BorrowBook();
             book.CustomerId = borrowBooks.CustomerId;
             book.BookId = borrowBooks.BookId;
             book.ReturnDate = borrowBooks.ReturnDate;
             _dbContext.Add(book);
             Save();
+            
+            
         }
 
         public Notifications CheckNotification(int bookId)
@@ -43,6 +46,11 @@ namespace LenkiMicroservice.Repository
         public Books GetBookByID(int bookId)
         {
             return _dbContext.Books.Find(bookId);
+        }
+
+        public BorrowBooks GetBorrowBookByID(int bookId)
+        {
+            return _dbContext.BorrowBooks.Find(bookId);
         }
 
         public Users GetCustomerByID(int customersId)

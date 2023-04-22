@@ -94,7 +94,7 @@
             Get a List of all Reserved Books 
             </summary>
         </member>
-        <member name="M:LenkiMicroservice.Controllers.ReservedBookController.Post(LenkiMicroservice.Model.ReservedBooks)">
+        <member name="M:LenkiMicroservice.Controllers.ReservedBookController.Post(LenkiMicroservice.Model.ReservedBook)">
             <summary>
             Reserved a Book in the Library
             </summary>

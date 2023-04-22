@@ -14,4 +14,13 @@ namespace LenkiMicroservice.Model
         public int BookId { get; set; }
         public bool Reserved { get; set; }
     }
+
+
+    public class ReservedBook
+    {
+        
+        public int CustomerId { get; set; }
+        public int BookId { get; set; }
+        public bool Reserved { get; set; }
+    }
 }

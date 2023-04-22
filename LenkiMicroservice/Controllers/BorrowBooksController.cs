@@ -60,7 +60,7 @@ namespace LenkiMicroservice.Controllers
         /// Borrow a Book to a Customer
         /// </summary>
         [SwaggerOperation("Borrow a Book to a Customer")]
-        [HttpPost("{BorrowedBook}")]
+        [HttpPost]
         public IActionResult Post([FromBody] BorrowBook borrowBooks)
         {
             var username = HttpContext.User;
@@ -68,12 +68,20 @@ namespace LenkiMicroservice.Controllers
             {
                 return Unauthorized();
             }
-            using (var scope = new TransactionScope())
+            var response = _borrowRepository.GetBorrowBookByID(borrowBooks.BookId);
+            if (response != null)
             {
-                _borrowRepository.BorrowBook(borrowBooks);
-                scope.Complete();
-                return CreatedAtAction(nameof(Get), 
-                    new { CustomerId = borrowBooks.CustomerId }, borrowBooks);
+                return BadRequest("Dear Customer The Book Id: " + response.BookId + "  you requested is Borrowed Out Already it will be returned on" + response.ReturnDate + ".");
+            }
+            else
+            {
+                using (var scope = new TransactionScope())
+                {
+                    _borrowRepository.BorrowBook(borrowBooks);
+                    scope.Complete();
+                    return CreatedAtAction(nameof(Get),
+                        new { CustomerId = borrowBooks.CustomerId }, borrowBooks);
+                }
             }
         }
 
@@ -82,7 +90,7 @@ namespace LenkiMicroservice.Controllers
         /// Return Book to the Library
         /// </summary>
         [SwaggerOperation("Return Book to the Library")]
-        [HttpPut("{ReturnBook}")]
+        [HttpPut("ReturnBook")]
         public IActionResult Put([FromBody] BorrowBooks borrow)
         {
             var username = HttpContext.User;
@@ -90,7 +98,8 @@ namespace LenkiMicroservice.Controllers
             {
                 return Unauthorized();
             }
-            if (borrow != null)
+      
+                    if (borrow != null)
             {
                 using (var scope = new TransactionScope())
                 {
@@ -99,6 +108,8 @@ namespace LenkiMicroservice.Controllers
                     return new OkResult();
                 }
             }
+            
+            
             return new NoContentResult();
         }
 
