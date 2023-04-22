@@ -44,7 +44,7 @@ namespace LenkiMicroservice.Controllers
                     new Claim(JwtRegisteredClaimNames.Sub, _configuration["JwtConfig:Subject"]),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                     new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
-                    new Claim("Id", user.Id.ToString()),
+                    new Claim("UserId", user.Id.ToString()),
                     new Claim("FullName", user.FullName),
                     new Claim("Email", user.Email),
                     new Claim("Phone", user.Phone),
@@ -60,6 +60,7 @@ namespace LenkiMicroservice.Controllers
 
                     return Ok(new
                     {
+                        UserId = user.Id,
                         FullName = user.FullName,
                         Email = user.Email,
                         Phone = user.Phone,
